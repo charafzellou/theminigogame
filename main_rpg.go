@@ -1,6 +1,6 @@
 package main
 
-// Importing necessary dependacies
+// Importing necessary dependencies
 import (
 	"fmt"
 	"math/rand"
@@ -8,10 +8,13 @@ import (
 
 // Initializing assets and events Structures
 type assetPlayer struct {
-	name		 string
-	class		 assetClass
-	inventory	 uint
-	lastAttack	 eventAttack
+	name		    string
+	class		    assetClass
+	inventory	    uint
+	attackList      map[int]eventAttack
+	specialAttack   eventCombo
+	reloadTime      uint
+	lastAttack	    eventAttack
 }
 type assetClass struct {
 	name     	string
