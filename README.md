@@ -6,7 +6,7 @@ It is a school project to learn basic *`Go`* / *`GoLang`* skills.
 
 The minigame is a turn-based RPG allowing you to control a character and play a **multiple-choice story** 📊💬.
 
-Choose one of the **three available classes** ♞-🏹-🐱‍👤, explore the **world** 🗺️, make the right choices *(or not?)*, brew **potions** ⚗️, learn **combo attacks** 🛡️, and defeat the **dangerous boss** 👹 waiting at the end of this beautiful pile of code 🎉!
+Choose one of the **five available classes** ♞-🏹-🐱‍👤-🙏-💪, explore the **world** 🗺️, make the right choices *(or not?)*, brew **potions** ⚗️, learn **combo attacks** 🛡️, and defeat the **dangerous boss** 👹 waiting at the end of this beautiful pile of code 🎉!
 
 ## The game
 
