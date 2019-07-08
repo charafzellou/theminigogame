@@ -50,11 +50,36 @@ type objectConsumable struct{
 // Initializing in-game assets
 const (
 )
+var (
+	classesMap = make(map[string]assetClass)
+	attacksMap = make(map[string]eventAttack)
+	combosMap  = make(map[string]eventCombo)
+)
+func init(){
+	initClasses()
+	initAttacks()
+	initCombos()
+}
 func initClasses() {
+	classesMap["Paladin"] = assetClass{"Paladin", 300, 10, 15}
+	classesMap["Archer"] = assetClass{"Archer", 245, 0, 25}
+	classesMap["Ninja"] = assetClass{"Ninja", 285, 0, 20}
+	classesMap["Cleric"] = assetClass{"Cleric", 210, 20, 5}
+	classesMap["Berserk"] = assetClass{"Berserk", 290, 5, 25}
 }
 func initAttacks() {
+	attacksMap["Paladin slash"] = eventAttack{"Paladin slash", "Paladin", 1,4}
+	attacksMap["Basic arrow"] = eventAttack{"Basic arrow", "Archer", 1, 4}
+	attacksMap["shuriken throw"] = eventAttack{"Shuriken throw", "Ninja", 1, 4}
+	attacksMap["Prier"] = eventAttack{"Prier", "Cleric", 0, 4}
+	attacksMap["Berserk cut"] = eventAttack{"Berserk cut", "Berserk", 1, 4}
 }
 func initCombos() {
+	combosMap["PaladinCombo"] = eventCombo{"DoubleSlash", "Paladin", attacksMap["Paladin slash"], attacksMap["Paladin slash"], 0, 3}
+	combosMap["ArcherCombo"] = eventCombo{"DoubleArrow", "Archer", attacksMap["Basic arrow"], attacksMap["Basic arrow"], 0, 3}
+	combosMap["NinjaCombo"] = eventCombo{"DoubleShuriken", "Ninja", attacksMap["Shuriken throw"], attacksMap["Shuriken throw"], 0, 3}
+	combosMap["ClericCombo"] = eventCombo{"DoublePrier", "Cleric", attacksMap["Prier"], attacksMap["Prier"], 10, 3}
+	combosMap["BerserkCombo"] = eventCombo{"DoubleCut", "Berserk", attacksMap["Berserk cut"], attacksMap["Berserk cut"], 0, 3}
 }
 func initPlayers() {
 }
