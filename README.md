@@ -20,8 +20,8 @@ Pull requests are always welcome 🤓, though we have no desire to turn this sch
 For bug fixes or improvements, please open an issue and we will get back to you as soon as we can! 🔜
 
 ## Project BIG STEPS (in french sorry)
-- [ ] Créer deux fonctions : "getHit" et "hit" qui respectivement permettent de retirer des points de vie et d'en faire subir. Libre à vous de déterminer les paramètres.
-- [ ] Créer une fonction qui, en fonction du sort subi, permettent de redonner des points de vie (pas de joueurs pour le moment)
+- [x] Créer deux fonctions : "getHit" et "hit" qui respectivement permettent de retirer des points de vie et d'en faire subir. Libre à vous de déterminer les paramètres.
+- [x] Créer une fonction qui, en fonction du sort subi, permettent de redonner des points de vie (pas de joueurs pour le moment)
 - [ ] Créer les Structs correspondants (au minimum deux Structs : Joueur et Attaque), qui permettraient à deux joueurs de s'affronter en PVP.
 - [ ] La Struct devra permettre aux joueurs d'avoir des attaques prédéfinies ainsi que des points de vie de base.
 - [ ] Créer une fonction Combo (correspondant à la Struct Joueur) permettant d'enchainer plusieurs attaques
