@@ -88,27 +88,28 @@ func initPlayers() {
 func calculateDamage(attacker assetPlayer, attack eventAttack) uint{
 	return (uint)(attack.damage + (uint)(rand.Intn((int)(attacker.class.strength))))
 }
-func calculateHealing(healer assetPlayer) uint{
-	return (uint)(1 + rand.Intn((int)(healer.class.healing)))
+func calculateHealing(healer assetPlayer, heal eventAttack) uint{
+	return (uint)(heal.damage + (uint)(rand.Intn((int)(healer.class.healing))))
 }
 func hit(attacker assetPlayer, attack eventAttack, target *assetPlayer) {
-	doneDamage := calculateDamage(attacker, attack)
-	fmt.Println(target.name, "took", doneDamage, "damage from", attacker.name)
-	target.class.health -= doneDamage
+
+	fmt.Println(attacker.name, "uses", attack.name, "on", target.name)
+	if attack.effect == 1 {
+		doneDamage := calculateDamage(attacker, attack)
+		getHit(target, doneDamage)
+	} else {
+		doneHeal := calculateHealing(attacker, attack)
+		getHealed( target, doneHeal)
+	}
 	fmt.Println(target.name, "has currently", target.class.health, "HP!")
 }
 func getHit(target *assetPlayer, amount uint){
-	fmt.Println(target.name, "suffered", amount, "damage")
 	target.class.health -= amount
-	fmt.Println(target.name, "dropped to", target.class.health, "HP!")
-}
-func heal(healer assetPlayer, target *assetPlayer) {
-	target.class.health += healer.class.strength
-	fmt.Println(healer.name, "healed", target.name, ", who has", target.class.health, "HP!")
+	fmt.Println(target.name, "suffered", amount, "damage !")
 }
 func getHealed(target *assetPlayer, amount uint){
 	target.class.health += amount
-	fmt.Println(target.name, "got healed and now has", target.class.health, "HP!")
+	fmt.Println(target.name, "recovered", amount, "HP !")
 }
 
 // Initializing Main Storyline
