@@ -4,6 +4,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"time"
 )
 
 // Initializing assets and events Structures
@@ -111,21 +112,88 @@ func getHealed(target *assetPlayer, amount uint){
 	target.class.health += amount
 	fmt.Println(target.name, "recovered", amount, "HP !")
 }
-
-// Initializing Main Storyline
-func main() {
+func printMenuUpperPart(){
+	fmt.Println("     ___     ___     ___     ___     ___     ___     ___     ___")
+	fmt.Println(" ___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___")
+	fmt.Println("/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\")
+	fmt.Println("\\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/")
+	fmt.Println("/   \\___/                                                   \\___/   \\")
+	fmt.Println("\\___/                                                           \\___/")
+}
+func printMenuBottomPart(){
+	fmt.Println("/   \\___                                                     ___/   \\")
+	fmt.Println("\\___/   \\___     ___     ___     ___     ___     ___     ___/   \\___/")
+	fmt.Println("/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\")
+	fmt.Println("\\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/")
+	fmt.Println("    \\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/")
+}
+func mainMenu(){
+	for {
+		choice := '0'
+		exit := 0
+		printMenuUpperPart()
+		fmt.Println("/   \\                    The Mini Go Game                       /   \\")
+		fmt.Println("\\___/                                                           \\___/")
+		fmt.Println("/   \\                                                           /   \\")
+		fmt.Println("\\___/                 1.    Story Mode                          \\___/")
+		fmt.Println("/   \\                                                           /   \\")
+		fmt.Println("\\___/                 2.       PvP                              \\___/")
+		fmt.Println("/   \\                                                           /   \\")
+		fmt.Println("\\___/                 3.     run demo                           \\___/")
+		fmt.Println("/   \\                                                           /   \\")
+		fmt.Println("\\___/                 q.     Exit Game                          \\___/")
+		printMenuBottomPart()
+		_, _ = fmt.Scanf("%c\n", &choice)
+		switch choice {
+		case '1':
+			fmt.Println("Work in progress")
+			// TODO : insert function that manage story mode
+			break
+		case '2':
+			fmt.Println("Work in progress")
+			// TODO : inset function that manage PvP
+			break
+		case '3':
+			runDemo()
+			break
+		case 'q':
+			exit = 1
+			break
+		default:
+			fmt.Println("Incorrect input, try again")
+		}
+		if exit == 1 {
+			fmt.Println("Bye Bye")
+			time.Sleep(2 * time.Second)
+			break
+		}
+		time.Sleep(3 * time.Second)
+	}
+}
+func runDemo(){
 	paladin := assetClass{"Paladin", 300, 20, 10}
 	archer := assetClass{"Archer", 245, 5, 25}
 	ninja := assetClass{"Ninja", 285, 10, 20}
 
-	attackPaladin := eventAttack{"attackPaladin", paladin, 4}
-	attackArcher := eventAttack{"attackArcher", archer, 4}
-	attackNinja := eventAttack{"attackNinja", ninja, 4}
+	attackPaladin := eventAttack{"attackPaladin", "Paladin", 1,4}
+	listPaladin := make(map[int]eventAttack)
+	listPaladin[0] = attackPaladin
+	attackArcher := eventAttack{"attackArcher", "Archer", 1,4}
+	listArcher := make(map[int]eventAttack)
+	listArcher[0] = attackArcher
+	attackNinja := eventAttack{"attackNinja", "Ninja", 1,4}
+	listNinja := make(map[int]eventAttack)
+	listNinja[0] = attackNinja
 
-	paladinJuan := assetPlayer{"Juanitus", paladin, 0, attackPaladin}
-	archerJuan := assetPlayer{"Juanito", archer, 0, attackArcher}
-	ninjaJuan := assetPlayer{"Juan", ninja, 0, attackNinja}
+	combo1 := eventCombo{ "doublePaladin", "Paladin", attackPaladin, attackPaladin, 5, 3}
+	combo2 := eventCombo{ "doubleArcher", "Archer", attackArcher, attackArcher, 5, 3}
+	combo3 := eventCombo{ "doubleNinja", "Ninja", attackNinja, attackNinja, 5, 3}
 
+	paladinJuan := assetPlayer{"Juanitus", paladin, 0, listPaladin, combo1, 3, attackPaladin}
+	archerJuan := assetPlayer{"Juanito", archer, 0, listArcher, combo2, 3, attackArcher}
+	ninjaJuan := assetPlayer{"Juan", ninja, 0, listNinja, combo3, 3, attackNinja}
+
+	fmt.Println("starting PvP demo : ")
 	hit(paladinJuan, attackPaladin, &archerJuan)
 	hit(paladinJuan, attackPaladin, &archerJuan)
 	hit(paladinJuan, attackPaladin, &archerJuan)
@@ -133,4 +201,10 @@ func main() {
 	hit(paladinJuan, attackPaladin, &archerJuan)
 	hit(ninjaJuan, attackArcher, &paladinJuan)
 	hit(archerJuan, attackNinja, &ninjaJuan)
+
+}
+
+// Initializing Main Storyline
+func main() {
+	mainMenu()
 }
