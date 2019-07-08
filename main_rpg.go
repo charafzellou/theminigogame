@@ -22,17 +22,25 @@ type assetClass struct {
 	healing 	uint
 	strength	uint
 }
+/*
+ * name   : attack name
+ * class  : class that can use the attack
+ * effect : 0 => healing 1 => damage
+ * damage : amount of damage without class' strength
+ */
 type eventAttack struct {
 	name   string
-	class  assetClass
+	class  string
+	effect uint
 	damage uint
 }
 type eventCombo struct {
 	name        string
-	class       assetClass
+	class       string
 	attackOne   eventAttack
 	attackTwo   eventAttack
 	damageBonus uint
+	reloadTime  uint
 }
 type objectConsumable struct{
 	name		string
