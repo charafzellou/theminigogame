@@ -112,6 +112,17 @@ func getHealed(target *assetPlayer, amount uint){
 	target.class.health += amount
 	fmt.Println(target.name, "recovered", amount, "HP !")
 }
+func comboHit(attacker assetPlayer, combo eventCombo, target *assetPlayer){
+	hit( attacker, combo.attackOne, target)
+	fmt.Println("OMG ! it's", combo.name ,"combo attack !")
+	hit( attacker, combo.attackTwo, target)
+	fmt.Println("Bonus power :")
+	if combo.attackOne.effect + combo.attackTwo.effect == 0 {
+		getHealed(target, combo.damageBonus)
+	} else {
+		getHit(target, combo.damageBonus)
+	}
+}
 func printMenuUpperPart(){
 	fmt.Println("     ___     ___     ___     ___     ___     ___     ___     ___")
 	fmt.Println(" ___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___")
