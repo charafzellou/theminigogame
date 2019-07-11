@@ -220,15 +220,15 @@ func pvpMenu(){
 func runDemo(){
 	paladin := assetClass{"Paladin", 300, 20, 10}
 	archer := assetClass{"Archer", 245, 5, 25}
-	ninja := assetClass{"Ninja", 285, 10, 20}
+	ninja := assetClass{"Ninja", 285, 20, 20}
 
-	attackPaladin := eventAttack{"attackPaladin", "Paladin", 1,4}
+	attackPaladin := eventAttack{"attackPaladin", "Paladin", 1,40}
 	listPaladin := make(map[int]eventAttack)
 	listPaladin[0] = attackPaladin
-	attackArcher := eventAttack{"attackArcher", "Archer", 1,4}
+	attackArcher := eventAttack{"attackArcher", "Archer", 1,40}
 	listArcher := make(map[int]eventAttack)
 	listArcher[0] = attackArcher
-	attackNinja := eventAttack{"attackNinja", "Ninja", 1,4}
+	attackNinja := eventAttack{"medicinalHerb", "Ninja", 0,40}
 	listNinja := make(map[int]eventAttack)
 	listNinja[0] = attackNinja
 
@@ -241,17 +241,32 @@ func runDemo(){
 	ninjaJuan := assetPlayer{"Juan", ninja, 0, listNinja, combo3, 3, attackNinja}
 
 	fmt.Println("starting PvP demo : ")
-	hit(paladinJuan, attackPaladin, &archerJuan)
-	hit(paladinJuan, attackPaladin, &archerJuan)
-	hit(paladinJuan, attackPaladin, &archerJuan)
-	hit(paladinJuan, attackPaladin, &archerJuan)
-	hit(paladinJuan, attackPaladin, &archerJuan)
-	hit(ninjaJuan, attackArcher, &paladinJuan)
-	hit(archerJuan, attackNinja, &ninjaJuan)
+	time.Sleep(3 * time.Second)
+	hit(paladinJuan, listPaladin[0], &archerJuan)
+	time.Sleep(3 * time.Second)
+	hit(archerJuan, listArcher[0], &paladinJuan)
+	time.Sleep(3 * time.Second)
+	comboHit( paladinJuan, paladinJuan.specialAttack, &archerJuan)
+	time.Sleep(3 * time.Second)
+	comboHit( archerJuan, archerJuan.specialAttack, &paladinJuan)
+	time.Sleep(3 * time.Second)
+	hit(ninjaJuan, listNinja[0], &archerJuan)
+	time.Sleep(3 * time.Second)
+	hit(ninjaJuan, listNinja[0], &paladinJuan)
+	time.Sleep(3 * time.Second)
+	comboHit(ninjaJuan, ninjaJuan.specialAttack, &archerJuan)
+	time.Sleep(8 * time.Second)
 
 }
 
 // Initializing Main Storyline
 func main() {
 	mainMenu()
+	/*choice := 2
+	fmt.Println("How many players ?")
+	_, _ = fmt.Scan(&choice)
+	for idx := 1; idx <= choice; idx++{
+		PvpPlayers[uint(idx)] = createPlayer()
+	}
+	fmt.Println(PvpPlayers)*/
 }
