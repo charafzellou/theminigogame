@@ -123,6 +123,89 @@ func comboHit(attacker assetPlayer, combo eventCombo, target *assetPlayer){
 		getHit(target, combo.damageBonus)
 	}
 }
+func createPlayer() assetPlayer{
+	name := ""
+	fmt.Print("Character Name: ")
+	_, _ = fmt.Scanf("%s\n", &name)
+
+	fmt.Println("Select your class :")
+	classesList := getClasses(classesMap)
+	displayList(classesList)
+	class := choiceFromList(classesList)
+
+	fmt.Println("Select your primary attack")
+	attacksList := getAttacks(attacksMap, classesList[class])
+	displayList(attacksList)
+	attack := choiceFromList(attacksList)
+	attackChosen := make(map[int]eventAttack)
+	attackChosen[1] = attacksMap[attacksList[attack]]
+
+	fmt.Println("Select your special attack")
+	combosList := getCombo(combosMap, classesList[class])
+	displayList(combosList)
+	combo := choiceFromList(combosList)
+
+	return assetPlayer{
+		name,
+		classesMap[classesList[class]],
+		0,
+		attackChosen,
+		combosMap[combosList[combo]],
+		combosMap[combosList[combo]].reloadTime,
+		attacksMap[attacksList[attack]],
+	}
+}
+func displayList(list map[int]string){
+	for idx, elemName := range list {
+		fmt.Println(idx, "", elemName)
+	}
+}
+func getClasses(list map[string]assetClass) map[int]string {
+	result := make(map[int]string)
+	index := 1
+	for className := range list {
+		result[index] = className
+		index++
+	}
+	return result
+}
+func getAttacks(list map[string]eventAttack, classeName string) map[int]string {
+	result := make(map[int]string)
+	index := 1
+	for attackName, attack := range list {
+		if attack.class == classeName {
+			result[index] = attackName
+			index++
+		}
+	}
+	return result
+}
+func getCombo(list map[string]eventCombo, classeName string) map[int]string {
+	result := make(map[int]string)
+	index := 1
+	for comboName, combo := range list {
+		if combo.class == classeName {
+			result[index] = comboName
+			index++
+		}
+	}
+	return result
+}
+func choiceFromList(list map[int]string) (choice int){
+	for {
+		isInt, _ := fmt.Scan(&choice)
+		if isInt == 1 {
+			if list[choice] == "" {
+				fmt.Println("Please enter valid number")
+			} else {
+				break
+			}
+		}
+	}
+	return
+}
+
+// Initializing Menu functions
 func printMenuUpperPart(){
 	fmt.Println("     ___     ___     ___     ___     ___     ___     ___     ___")
 	fmt.Println(" ___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___/   \\___")
