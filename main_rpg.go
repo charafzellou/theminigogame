@@ -150,8 +150,7 @@ func mainMenu(){
 			// TODO : insert function that manage story mode
 			break
 		case '2':
-			fmt.Println("Work in progress")
-			// TODO : inset function that manage PvP
+			pvpMenu()
 			break
 		case '3':
 			runDemo()
@@ -165,6 +164,43 @@ func mainMenu(){
 		if exit == 1 {
 			fmt.Println("Bye Bye")
 			time.Sleep(2 * time.Second)
+			break
+		}
+		time.Sleep(3 * time.Second)
+	}
+}
+func pvpMenu(){
+	for {
+		choice := '0'
+		exit := 0
+		printMenuUpperPart()
+		fmt.Println("/   \\                    The Mini Go Game                       /   \\")
+		fmt.Println("\\___/                        PvP mode                           \\___/")
+		fmt.Println("/   \\                                                           /   \\")
+		fmt.Println("\\___/                 1.      1 vs 1                            \\___/")
+		fmt.Println("/   \\                                                           /   \\")
+		fmt.Println("\\___/                 2.      2 vs 2                            \\___/")
+		fmt.Println("/   \\                                                           /   \\")
+		fmt.Println("\\___/                 3.      go back                           \\___/")
+		printMenuBottomPart()
+		_, _ = fmt.Scanf("%c\n", &choice)
+		switch choice {
+		case '1':
+			fmt.Println("Work in progress")
+			// TODO : insert 1 vs 1 mode
+			break
+		case '2':
+			fmt.Println("Work in progress")
+			// TODO : inset 2 vs 2 mode
+			break
+		case '3':
+			exit = 1
+			break
+		default:
+			fmt.Println("Incorrect input, try again")
+		}
+		if exit == 1 {
+			time.Sleep(1 * time.Second)
 			break
 		}
 		time.Sleep(3 * time.Second)
