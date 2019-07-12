@@ -26,7 +26,7 @@ For bug fixes or improvements, please open an issue and we will get back to you 
 - [X] La Struct devra permettre aux joueurs d'avoir des attaques prédéfinies ainsi que des points de vie de base.
 - [X] Créer une fonction Combo (correspondant à la Struct Joueur) permettant d'enchainer plusieurs attaques
 en même temps, et donc de faire subir plusieurs attaques à un adversaire.
-- [ ] Implémenter une manière permettant à des groupes de joueurs de s'affronter entre-eux (hint: utilisez les collections)
+- [x] Implémenter une manière permettant à des groupes de joueurs de s'affronter entre-eux (hint: utilisez les collections)
 
 ## License
 [GNU General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/) 🥐

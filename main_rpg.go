@@ -19,7 +19,7 @@ type assetPlayer struct {
 }
 type assetClass struct {
 	name     	string
-	health		uint
+	health		int
 	healing 	uint
 	strength	uint
 }
@@ -40,7 +40,7 @@ type eventCombo struct {
 	class       string
 	attackOne   eventAttack
 	attackTwo   eventAttack
-	damageBonus uint
+	damageBonus int
 	reloadTime  uint
 }
 type objectConsumable struct{
@@ -55,6 +55,10 @@ var (
 	classesMap = make(map[string]assetClass)
 	attacksMap = make(map[string]eventAttack)
 	combosMap  = make(map[string]eventCombo)
+	pvpBlueTeam = make(map[uint]*assetPlayer)
+	pvpRedTeam = make(map[uint]*assetPlayer)
+	randSeed = rand.NewSource(time.Now().UnixNano())
+	random = rand.New(randSeed)
 )
 func init(){
 	initClasses()
@@ -71,7 +75,7 @@ func initClasses() {
 func initAttacks() {
 	attacksMap["Paladin slash"] = eventAttack{"Paladin slash", "Paladin", 1,4}
 	attacksMap["Basic arrow"] = eventAttack{"Basic arrow", "Archer", 1, 4}
-	attacksMap["shuriken throw"] = eventAttack{"Shuriken throw", "Ninja", 1, 4}
+	attacksMap["Shuriken throw"] = eventAttack{"Shuriken throw", "Ninja", 1, 4}
 	attacksMap["Prier"] = eventAttack{"Prier", "Cleric", 0, 4}
 	attacksMap["Berserk cut"] = eventAttack{"Berserk cut", "Berserk", 1, 4}
 }
@@ -86,11 +90,11 @@ func initPlayers() {
 }
 
 // Initializing in-game functions
-func calculateDamage(attacker assetPlayer, attack eventAttack) uint{
-	return (uint)(attack.damage + (uint)(rand.Intn((int)(attacker.class.strength))))
+func calculateDamage(attacker assetPlayer, attack eventAttack) int{
+	return int(attack.damage) + (random.Intn((int)(attacker.class.strength)))
 }
-func calculateHealing(healer assetPlayer, heal eventAttack) uint{
-	return (uint)(heal.damage + (uint)(rand.Intn((int)(healer.class.healing))))
+func calculateHealing(healer assetPlayer, heal eventAttack) int{
+	return int(heal.damage) + (random.Intn((int)(healer.class.healing)))
 }
 func hit(attacker assetPlayer, attack eventAttack, target *assetPlayer) {
 
@@ -104,11 +108,11 @@ func hit(attacker assetPlayer, attack eventAttack, target *assetPlayer) {
 	}
 	fmt.Println(target.name, "has currently", target.class.health, "HP!")
 }
-func getHit(target *assetPlayer, amount uint){
+func getHit(target *assetPlayer, amount int){
 	target.class.health -= amount
 	fmt.Println(target.name, "suffered", amount, "damage !")
 }
-func getHealed(target *assetPlayer, amount uint){
+func getHealed(target *assetPlayer, amount int){
 	target.class.health += amount
 	fmt.Println(target.name, "recovered", amount, "HP !")
 }
@@ -180,6 +184,13 @@ func getAttacks(list map[string]eventAttack, classeName string) map[int]string {
 	}
 	return result
 }
+func getPlayerAttack(list map[int]eventAttack) map[int]string {
+	result := make(map[int]string)
+	for idx, attack := range list {
+		result[idx] = attack.name
+	}
+	return result
+}
 func getCombo(list map[string]eventCombo, classeName string) map[int]string {
 	result := make(map[int]string)
 	index := 1
@@ -188,6 +199,13 @@ func getCombo(list map[string]eventCombo, classeName string) map[int]string {
 			result[index] = comboName
 			index++
 		}
+	}
+	return result
+}
+func getTeamsPlayers(list map[uint]*assetPlayer) map[int]string {
+	result := make(map[int]string)
+	for idx, player := range list {
+		result[int(idx)] = player.name + " (" + player.class.name + ")"
 	}
 	return result
 }
@@ -203,6 +221,132 @@ func choiceFromList(list map[int]string) (choice int){
 		}
 	}
 	return
+}
+func setPvpParams(redTeamSize int, blueTeamSize int){
+	fmt.Println("RED TEAM :")
+	createTeam(redTeamSize, pvpRedTeam)
+	fmt.Println("BLUE TEAM :")
+	createTeam(blueTeamSize, pvpBlueTeam)
+}
+func createTeam(teamSize int, teamMap map[uint]*assetPlayer){
+	for idx := 1; idx <= teamSize; idx++{
+		fmt.Println("Player", idx, "selection")
+		player := createPlayer()
+		teamMap[uint(idx)] = &player
+	}
+}
+func startPvpFight(redTeamSize int, blueTeamSize int){
+	coinToss := random.Intn(2)
+	if coinToss == 0 {
+		fmt.Println("RedTeam Starts !")
+	} else {
+		fmt.Println("BlueTeam Starts !")
+	}
+	winner := -1
+	for winner == -1 {
+		switch coinToss {
+		case 0:
+			if teamTurn( redTeamSize, pvpRedTeam, pvpBlueTeam ) == false{
+				winner = 1
+			}
+			coinToss = 1
+			break
+		case 1:
+			if teamTurn( blueTeamSize, pvpBlueTeam, pvpRedTeam ) == false{
+				winner = 0
+			}
+			coinToss = 0
+			break
+		default:
+			panic("Error with random function")
+		}
+	}
+	displayWinnerScreen(winner)
+}
+func teamTurn(teamSize int, teamPlaying map[uint]*assetPlayer, enemyTeam map[uint]*assetPlayer) bool{
+	deadCounter := 0
+	for playerTurn := 1; playerTurn <= teamSize; playerTurn++ {
+		if _, ok := teamPlaying[uint(playerTurn)]; ok {
+			action, attack := playerSelectAction(teamPlaying[uint(playerTurn)])
+			if action == 1 {
+				if teamPlaying[uint(playerTurn)].attackList[attack].effect == 0 {
+					target := playerSelectTarget(teamPlaying)
+					hit(*teamPlaying[uint(playerTurn)], teamPlaying[uint(playerTurn)].attackList[attack], teamPlaying[uint(target)] )
+				} else {
+					target := playerSelectTarget(enemyTeam)
+					hit(*teamPlaying[uint(playerTurn)], teamPlaying[uint(playerTurn)].attackList[attack], enemyTeam[uint(target)] )
+					if enemyTeam[uint(target)].class.health <= 0 {
+						setPlayerAsDead(enemyTeam, uint(target))
+					}
+				}
+			} else {
+				if teamPlaying[uint(playerTurn)].specialAttack.attackOne.effect == 0 {
+					target := playerSelectTarget(teamPlaying)
+					comboHit(*teamPlaying[uint(playerTurn)], teamPlaying[uint(playerTurn)].specialAttack, teamPlaying[uint(target)])
+				} else {
+					target := playerSelectTarget(enemyTeam)
+					comboHit(*teamPlaying[uint(playerTurn)], teamPlaying[uint(playerTurn)].specialAttack, enemyTeam[uint(target)])
+					if enemyTeam[uint(target)].class.health <= 0 {
+						setPlayerAsDead(enemyTeam, uint(target))
+					}
+				}
+			}
+			if teamPlaying[uint(playerTurn)].reloadTime > 0 {
+				teamPlaying[uint(playerTurn)].reloadTime--
+			} else if action == 2 {
+					teamPlaying[uint(playerTurn)].reloadTime = teamPlaying[uint(playerTurn)].specialAttack.reloadTime
+			}
+		} else {
+			deadCounter++
+		}
+	}
+	if deadCounter == teamSize {
+		return false
+	}
+	return true
+}
+func playerSelectAction(player *assetPlayer) (action int, attack int){
+	fmt.Println("it's", player.name+"'s", "turn.")
+	fmt.Println("Actions : ")
+	actionChoice := make(map[int]string)
+	actionChoice[1] = "Attack"
+	actionChoice[2] = "SpecialAttack"
+	exit := 0
+	for exit != 1 {
+		displayList(actionChoice)
+		action = choiceFromList(actionChoice)
+		switch action {
+		case 1:
+			playerAttackList := getPlayerAttack(player.attackList)
+			displayList(playerAttackList)
+			attack = choiceFromList(playerAttackList)
+			exit = 1
+			break
+		case 2:
+			if player.reloadTime != 0 {
+				fmt.Println(player.reloadTime, "turn(s) until usable.")
+				fmt.Println("Please select an other action.")
+			} else {
+				attack = -1
+				exit = 1
+			}
+			break
+		default:
+			panic("Unknown error !")
+		}
+	}
+	return
+}
+func playerSelectTarget(team map[uint]*assetPlayer) int{
+	fmt.Println("Use on :")
+	playersList := getTeamsPlayers(team)
+	displayList(playersList)
+	target := choiceFromList(playersList)
+	return target
+}
+func setPlayerAsDead(playerTeam map[uint]*assetPlayer, playerId uint){
+	fmt.Println("oh...", playerTeam[playerId].name, "is dead... †")
+	delete(playerTeam, playerId)
 }
 
 // Initializing Menu functions
@@ -280,12 +424,10 @@ func pvpMenu(){
 		_, _ = fmt.Scanf("%c\n", &choice)
 		switch choice {
 		case '1':
-			fmt.Println("Work in progress")
-			// TODO : insert 1 vs 1 mode
+			Start1vs1()
 			break
 		case '2':
-			fmt.Println("Work in progress")
-			// TODO : inset 2 vs 2 mode
+			Start2vs2()
 			break
 		case '3':
 			exit = 1
@@ -341,15 +483,32 @@ func runDemo(){
 	time.Sleep(8 * time.Second)
 
 }
+func Start1vs1(){
+	setPvpParams(1, 1)
+	startPvpFight(1,1)
+}
+func Start2vs2(){
+	setPvpParams(2, 2)
+	startPvpFight(2,2)
+}
+func displayWinnerScreen(winner int){
+	printMenuUpperPart()
+	fmt.Println("/   \\                                                           /   \\")
+	fmt.Println("\\___/                                                           \\___/")
+	fmt.Println("/   \\                                                           /   \\")
+	if winner == 0 {
+		fmt.Println("\\___/                     RED TEAM WINS                         \\___/")
+	} else {
+		fmt.Println("\\___/                    BLUE TEAM WINS                         \\___/")
+	}
+	fmt.Println("/   \\                                                           /   \\")
+	fmt.Println("\\___/                                                           \\___/")
+	fmt.Println("/   \\                                                           /   \\")
+	fmt.Println("\\___/                                                           \\___/")
+	printMenuBottomPart()
+}
 
 // Initializing Main Storyline
 func main() {
 	mainMenu()
-	/*choice := 2
-	fmt.Println("How many players ?")
-	_, _ = fmt.Scan(&choice)
-	for idx := 1; idx <= choice; idx++{
-		PvpPlayers[uint(idx)] = createPlayer()
-	}
-	fmt.Println(PvpPlayers)*/
 }
