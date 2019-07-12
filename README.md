@@ -4,9 +4,9 @@ TheMiniGoGame is a.. well, everything is in the title 🙄
 
 It is a school project to learn basic *`Go`* / *`GoLang`* skills.
 
-The minigame is a turn-based RPG allowing you to control a character and play a **multiple-choice story** 📊💬.
+The minigame is a turn-based RPG allowing you to control a character and **fight your friends** or play a **multiple-choice story** 📊💬.
 
-Choose one of the **three available classes** ♞-🏹-🐱‍👤, explore the **world** 🗺️, make the right choices *(or not?)*, brew **potions** ⚗️, learn **combo attacks** 🛡️, and defeat the **dangerous boss** 👹 waiting at the end of this beautiful pile of code 🎉!
+Choose one of the **five available classes** ♞-🏹-🐱‍👤-🙏-💪, explore the **world** 🗺️, make the right choices *(or not?)*, brew **potions** ⚗️, learn **combo attacks** 🛡️, and defeat the **dangerous boss** 👹 waiting at the end of this beautiful pile of code 🎉!
 
 ## The game
 
@@ -22,11 +22,11 @@ For bug fixes or improvements, please open an issue and we will get back to you 
 ## Project BIG STEPS (in french sorry)
 - [x] Créer deux fonctions : "getHit" et "hit" qui respectivement permettent de retirer des points de vie et d'en faire subir. Libre à vous de déterminer les paramètres.
 - [x] Créer une fonction qui, en fonction du sort subi, permettent de redonner des points de vie (pas de joueurs pour le moment)
-- [ ] Créer les Structs correspondants (au minimum deux Structs : Joueur et Attaque), qui permettraient à deux joueurs de s'affronter en PVP.
-- [ ] La Struct devra permettre aux joueurs d'avoir des attaques prédéfinies ainsi que des points de vie de base.
-- [ ] Créer une fonction Combo (correspondant à la Struct Joueur) permettant d'enchainer plusieurs attaques
+- [X] Créer les Structs correspondants (au minimum deux Structs : Joueur et Attaque), qui permettraient à deux joueurs de s'affronter en PVP.
+- [X] La Struct devra permettre aux joueurs d'avoir des attaques prédéfinies ainsi que des points de vie de base.
+- [X] Créer une fonction Combo (correspondant à la Struct Joueur) permettant d'enchainer plusieurs attaques
 en même temps, et donc de faire subir plusieurs attaques à un adversaire.
-- [ ] Implémenter une manière permettant à des groupes de joueurs de s'affronter entre-eux (hint: utilisez les collections)
+- [x] Implémenter une manière permettant à des groupes de joueurs de s'affronter entre-eux (hint: utilisez les collections)
 
 ## License
 [GNU General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/) 🥐
