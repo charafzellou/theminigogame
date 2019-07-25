@@ -9,39 +9,39 @@ import (
 
 // Initializing assets and events Structures
 type assetPlayer struct {
-	name		    string
-	class		    assetClass
-	inventory	    uint
-	attackList      map[int]eventAttack
-	specialAttack   eventCombo
-	reloadTime      uint
-	lastAttack	    eventAttack
+	Name           string
+	Class          assetClass
+	Inventory      uint
+	AttackList     map[int]eventAttack
+	SpecialAttack  eventCombo
+	ReloadTime     uint
+	LastAttack     eventAttack
 }
 type assetClass struct {
-	name     	string
-	health		int
-	healing 	uint
-	strength	uint
+	Name     string
+	Health   int
+	Healing  uint
+	Strength uint
 }
 /*
- * name   : attack name
- * class  : class that can use the attack
- * effect : 0 => healing 1 => damage
- * damage : amount of damage without class' strength
+ * Name   : attack Name
+ * Class  : Class that can use the attack
+ * Effect : 0 => Healing 1 => Damage
+ * Damage : amount of Damage without Class' Strength
  */
 type eventAttack struct {
-	name   string
-	class  string
-	effect uint
-	damage uint
+	Name   string
+	Class  string
+	Effect uint
+	Damage uint
 }
 type eventCombo struct {
-	name        string
-	class       string
-	attackOne   eventAttack
-	attackTwo   eventAttack
-	damageBonus int
-	reloadTime  uint
+	Name        string
+	Class       string
+	AttackOne   eventAttack
+	AttackTwo   eventAttack
+	DamageBonus int
+	ReloadTime  uint
 }
 type objectConsumable struct{
 	name		string
@@ -64,6 +64,7 @@ func init(){
 	initClasses()
 	initAttacks()
 	initCombos()
+	initPlayers()
 }
 func initClasses() {
 	classesMap["Paladin"] = assetClass{"Paladin", 300, 10, 15}
@@ -87,44 +88,45 @@ func initCombos() {
 	combosMap["BerserkCombo"] = eventCombo{"DoubleCut", "Berserk", attacksMap["Berserk cut"], attacksMap["Berserk cut"], 0, 3}
 }
 func initPlayers() {
+	getAccounts()
 }
 
 // Initializing in-game functions
 func calculateDamage(attacker assetPlayer, attack eventAttack) int{
-	return int(attack.damage) + (random.Intn((int)(attacker.class.strength)))
+	return int(attack.Damage) + (random.Intn((int)(attacker.Class.Strength)))
 }
 func calculateHealing(healer assetPlayer, heal eventAttack) int{
-	return int(heal.damage) + (random.Intn((int)(healer.class.healing)))
+	return int(heal.Damage) + (random.Intn((int)(healer.Class.Healing)))
 }
 func hit(attacker assetPlayer, attack eventAttack, target *assetPlayer) {
 
-	fmt.Println(attacker.name, "uses", attack.name, "on", target.name)
-	if attack.effect == 1 {
+	fmt.Println(attacker.Name, "uses", attack.Name, "on", target.Name)
+	if attack.Effect == 1 {
 		doneDamage := calculateDamage(attacker, attack)
 		getHit(target, doneDamage)
 	} else {
 		doneHeal := calculateHealing(attacker, attack)
 		getHealed( target, doneHeal)
 	}
-	fmt.Println(target.name, "has currently", target.class.health, "HP!")
+	fmt.Println(target.Name, "has currently", target.Class.Health, "HP!")
 }
 func getHit(target *assetPlayer, amount int){
-	target.class.health -= amount
-	fmt.Println(target.name, "suffered", amount, "damage !")
+	target.Class.Health -= amount
+	fmt.Println(target.Name, "suffered", amount, "Damage !")
 }
 func getHealed(target *assetPlayer, amount int){
-	target.class.health += amount
-	fmt.Println(target.name, "recovered", amount, "HP !")
+	target.Class.Health += amount
+	fmt.Println(target.Name, "recovered", amount, "HP !")
 }
 func comboHit(attacker assetPlayer, combo eventCombo, target *assetPlayer){
-	hit( attacker, combo.attackOne, target)
-	fmt.Println("OMG ! it's", combo.name ,"combo attack !")
-	hit( attacker, combo.attackTwo, target)
+	hit( attacker, combo.AttackOne, target)
+	fmt.Println("OMG ! it's", combo.Name,"combo attack !")
+	hit( attacker, combo.AttackTwo, target)
 	fmt.Println("Bonus power :")
-	if combo.attackOne.effect + combo.attackTwo.effect == 0 {
-		getHealed(target, combo.damageBonus)
+	if combo.AttackOne.Effect+ combo.AttackTwo.Effect == 0 {
+		getHealed(target, combo.DamageBonus)
 	} else {
-		getHit(target, combo.damageBonus)
+		getHit(target, combo.DamageBonus)
 	}
 }
 func createPlayer() assetPlayer{
@@ -132,7 +134,7 @@ func createPlayer() assetPlayer{
 	fmt.Print("Character Name: ")
 	_, _ = fmt.Scanf("%s\n", &name)
 
-	fmt.Println("Select your class :")
+	fmt.Println("Select your Class :")
 	classesList := getClasses(classesMap)
 	displayList(classesList)
 	class := choiceFromList(classesList)
@@ -155,7 +157,7 @@ func createPlayer() assetPlayer{
 		0,
 		attackChosen,
 		combosMap[combosList[combo]],
-		combosMap[combosList[combo]].reloadTime,
+		combosMap[combosList[combo]].ReloadTime,
 		attacksMap[attacksList[attack]],
 	}
 }
@@ -177,7 +179,7 @@ func getAttacks(list map[string]eventAttack, classeName string) map[int]string {
 	result := make(map[int]string)
 	index := 1
 	for attackName, attack := range list {
-		if attack.class == classeName {
+		if attack.Class == classeName {
 			result[index] = attackName
 			index++
 		}
@@ -187,7 +189,7 @@ func getAttacks(list map[string]eventAttack, classeName string) map[int]string {
 func getPlayerAttack(list map[int]eventAttack) map[int]string {
 	result := make(map[int]string)
 	for idx, attack := range list {
-		result[idx] = attack.name
+		result[idx] = attack.Name
 	}
 	return result
 }
@@ -195,7 +197,7 @@ func getCombo(list map[string]eventCombo, classeName string) map[int]string {
 	result := make(map[int]string)
 	index := 1
 	for comboName, combo := range list {
-		if combo.class == classeName {
+		if combo.Class == classeName {
 			result[index] = comboName
 			index++
 		}
@@ -205,7 +207,7 @@ func getCombo(list map[string]eventCombo, classeName string) map[int]string {
 func getTeamsPlayers(list map[uint]*assetPlayer) map[int]string {
 	result := make(map[int]string)
 	for idx, player := range list {
-		result[int(idx)] = player.name + " (" + player.class.name + ")"
+		result[int(idx)] = player.Name + " (" + player.Class.Name + ")"
 	}
 	return result
 }
@@ -269,32 +271,32 @@ func teamTurn(teamSize int, teamPlaying map[uint]*assetPlayer, enemyTeam map[uin
 		if _, ok := teamPlaying[uint(playerTurn)]; ok {
 			action, attack := playerSelectAction(teamPlaying[uint(playerTurn)])
 			if action == 1 {
-				if teamPlaying[uint(playerTurn)].attackList[attack].effect == 0 {
+				if teamPlaying[uint(playerTurn)].AttackList[attack].Effect == 0 {
 					target := playerSelectTarget(teamPlaying)
-					hit(*teamPlaying[uint(playerTurn)], teamPlaying[uint(playerTurn)].attackList[attack], teamPlaying[uint(target)] )
+					hit(*teamPlaying[uint(playerTurn)], teamPlaying[uint(playerTurn)].AttackList[attack], teamPlaying[uint(target)] )
 				} else {
 					target := playerSelectTarget(enemyTeam)
-					hit(*teamPlaying[uint(playerTurn)], teamPlaying[uint(playerTurn)].attackList[attack], enemyTeam[uint(target)] )
-					if enemyTeam[uint(target)].class.health <= 0 {
+					hit(*teamPlaying[uint(playerTurn)], teamPlaying[uint(playerTurn)].AttackList[attack], enemyTeam[uint(target)] )
+					if enemyTeam[uint(target)].Class.Health <= 0 {
 						setPlayerAsDead(enemyTeam, uint(target))
 					}
 				}
 			} else {
-				if teamPlaying[uint(playerTurn)].specialAttack.attackOne.effect == 0 {
+				if teamPlaying[uint(playerTurn)].SpecialAttack.AttackOne.Effect == 0 {
 					target := playerSelectTarget(teamPlaying)
-					comboHit(*teamPlaying[uint(playerTurn)], teamPlaying[uint(playerTurn)].specialAttack, teamPlaying[uint(target)])
+					comboHit(*teamPlaying[uint(playerTurn)], teamPlaying[uint(playerTurn)].SpecialAttack, teamPlaying[uint(target)])
 				} else {
 					target := playerSelectTarget(enemyTeam)
-					comboHit(*teamPlaying[uint(playerTurn)], teamPlaying[uint(playerTurn)].specialAttack, enemyTeam[uint(target)])
-					if enemyTeam[uint(target)].class.health <= 0 {
+					comboHit(*teamPlaying[uint(playerTurn)], teamPlaying[uint(playerTurn)].SpecialAttack, enemyTeam[uint(target)])
+					if enemyTeam[uint(target)].Class.Health <= 0 {
 						setPlayerAsDead(enemyTeam, uint(target))
 					}
 				}
 			}
-			if teamPlaying[uint(playerTurn)].reloadTime > 0 {
-				teamPlaying[uint(playerTurn)].reloadTime--
+			if teamPlaying[uint(playerTurn)].ReloadTime > 0 {
+				teamPlaying[uint(playerTurn)].ReloadTime--
 			} else if action == 2 {
-					teamPlaying[uint(playerTurn)].reloadTime = teamPlaying[uint(playerTurn)].specialAttack.reloadTime
+					teamPlaying[uint(playerTurn)].ReloadTime = teamPlaying[uint(playerTurn)].SpecialAttack.ReloadTime
 			}
 		} else {
 			deadCounter++
@@ -306,7 +308,7 @@ func teamTurn(teamSize int, teamPlaying map[uint]*assetPlayer, enemyTeam map[uin
 	return true
 }
 func playerSelectAction(player *assetPlayer) (action int, attack int){
-	fmt.Println("it's", player.name+"'s", "turn.")
+	fmt.Println("it's", player.Name+"'s", "turn.")
 	fmt.Println("Actions : ")
 	actionChoice := make(map[int]string)
 	actionChoice[1] = "Attack"
@@ -317,14 +319,14 @@ func playerSelectAction(player *assetPlayer) (action int, attack int){
 		action = choiceFromList(actionChoice)
 		switch action {
 		case 1:
-			playerAttackList := getPlayerAttack(player.attackList)
+			playerAttackList := getPlayerAttack(player.AttackList)
 			displayList(playerAttackList)
 			attack = choiceFromList(playerAttackList)
 			exit = 1
 			break
 		case 2:
-			if player.reloadTime != 0 {
-				fmt.Println(player.reloadTime, "turn(s) until usable.")
+			if player.ReloadTime != 0 {
+				fmt.Println(player.ReloadTime, "turn(s) until usable.")
 				fmt.Println("Please select an other action.")
 			} else {
 				attack = -1
@@ -345,7 +347,7 @@ func playerSelectTarget(team map[uint]*assetPlayer) int{
 	return target
 }
 func setPlayerAsDead(playerTeam map[uint]*assetPlayer, playerId uint){
-	fmt.Println("oh...", playerTeam[playerId].name, "is dead... †")
+	fmt.Println("oh...", playerTeam[playerId].Name, "is dead... †")
 	delete(playerTeam, playerId)
 }
 
@@ -379,7 +381,7 @@ func mainMenu(){
 		fmt.Println("/   \\                                                           /   \\")
 		fmt.Println("\\___/                 3.     run demo                           \\___/")
 		fmt.Println("/   \\                                                           /   \\")
-		fmt.Println("\\___/                 q.     Exit Game                          \\___/")
+		fmt.Println("\\___/                 q.      log out                           \\___/")
 		printMenuBottomPart()
 		_, _ = fmt.Scanf("%c\n", &choice)
 		switch choice {
@@ -400,7 +402,8 @@ func mainMenu(){
 			fmt.Println("Incorrect input, try again")
 		}
 		if exit == 1 {
-			fmt.Println("Bye Bye")
+			loggedAccount = -1
+			fmt.Println("logging out, bye bye !")
 			time.Sleep(2 * time.Second)
 			break
 		}
@@ -471,15 +474,15 @@ func runDemo(){
 	time.Sleep(3 * time.Second)
 	hit(archerJuan, listArcher[0], &paladinJuan)
 	time.Sleep(3 * time.Second)
-	comboHit( paladinJuan, paladinJuan.specialAttack, &archerJuan)
+	comboHit( paladinJuan, paladinJuan.SpecialAttack, &archerJuan)
 	time.Sleep(3 * time.Second)
-	comboHit( archerJuan, archerJuan.specialAttack, &paladinJuan)
+	comboHit( archerJuan, archerJuan.SpecialAttack, &paladinJuan)
 	time.Sleep(3 * time.Second)
 	hit(ninjaJuan, listNinja[0], &archerJuan)
 	time.Sleep(3 * time.Second)
 	hit(ninjaJuan, listNinja[0], &paladinJuan)
 	time.Sleep(3 * time.Second)
-	comboHit(ninjaJuan, ninjaJuan.specialAttack, &archerJuan)
+	comboHit(ninjaJuan, ninjaJuan.SpecialAttack, &archerJuan)
 	time.Sleep(8 * time.Second)
 
 }
@@ -510,5 +513,5 @@ func displayWinnerScreen(winner int){
 
 // Initializing Main Storyline
 func main() {
-	mainMenu()
+	homePage()
 }
