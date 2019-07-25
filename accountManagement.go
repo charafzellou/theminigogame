@@ -107,3 +107,46 @@ func saveAccounts(){
 		fmt.Println("Account successfully saved")
 	}
 }
+
+func homePage(){
+	for {
+		choice := '0'
+		exit := 0
+		printMenuUpperPart()
+		fmt.Println("/   \\                    The Mini Go Game                       /   \\")
+		fmt.Println("\\___/                                                           \\___/")
+		fmt.Println("/   \\                                                           /   \\")
+		fmt.Println("\\___/                 1.     sign in                            \\___/")
+		fmt.Println("/   \\                                                           /   \\")
+		fmt.Println("\\___/                 2.     register                           \\___/")
+		fmt.Println("/   \\                                                           /   \\")
+		fmt.Println("\\___/                 q.      exit                              \\___/")
+		printMenuBottomPart()
+		_, _ = fmt.Scanf("%c\n", &choice)
+		switch choice {
+		case '1':
+			if signIn() {
+				fmt.Println("Logged as almighty", accountsList[loggedAccount].Player.Name, "the", accountsList[loggedAccount].Player.Class.Name)
+				mainMenu()
+			} else {
+				fmt.Println("We can't find that Account or password is incorrect.")
+			}
+			break
+		case '2':
+			register()
+			break
+		case 'q':
+			exit = 1
+			break
+		default:
+			fmt.Println("Incorrect input, try again")
+		}
+		if exit == 1 {
+			fmt.Println("Bye Bye")
+			time.Sleep(2 * time.Second)
+			break
+		}
+		time.Sleep(3 * time.Second)
+	}
+}
+
