@@ -19,6 +19,38 @@ type assetAccount struct {
 	AccountPwd    [32]byte
 	Player        assetPlayer
 }
+func register(){
+	newAccount := assetAccount{}
+
+	for {
+		fmt.Print("Account Id: ")
+		_, _ = fmt.Scanf("%s\n", &newAccount.AccountId)
+		if accountExist(newAccount.AccountId) && newAccount.AccountId != "" {
+			println("Id already taken. Please retry")
+		} else {
+			break
+		}
+	}
+
+	clearPassword := ""
+	fmt.Print("Password: \033[38;5;232m")
+	_, _ = fmt.Scanf("%s\n", &clearPassword)
+	fmt.Print("\033[39;49m")
+	newAccount.AccountPwd = sha256.Sum256([]byte(clearPassword))
+
+	newAccount.Player = createPlayer()
+	accountsList = append(accountsList, newAccount)
+	saveAccounts()
+}
+
+func accountExist(accountId string) bool{
+	for _, account := range accountsList {
+		if account.AccountId == accountId {
+			return true
+		}
+	}
+	return false
+}
 // not pure att all
 func getAccounts(){
 	content, err := ioutil.ReadFile(".data/accounts.secure")
