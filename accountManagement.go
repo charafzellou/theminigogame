@@ -105,6 +105,7 @@ func saveAccounts(){
 		log.Fatal(err)
 	} else {
 		fmt.Println("Account successfully saved")
+		getAccounts()
 	}
 }
 
