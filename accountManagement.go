@@ -93,6 +93,7 @@ func getAccounts(){
 		log.Fatal(err)
 	}
 }
+
 // not pure either
 func saveAccounts(){
 	jsonAccounts, err := json.Marshal(accountsList)
@@ -117,11 +118,11 @@ func homePage(){
 		fmt.Println("/   \\                    The Mini Go Game                       /   \\")
 		fmt.Println("\\___/                                                           \\___/")
 		fmt.Println("/   \\                                                           /   \\")
-		fmt.Println("\\___/                 1.     sign in                            \\___/")
+		fmt.Println("\\___/                 1.     Sign in                            \\___/")
 		fmt.Println("/   \\                                                           /   \\")
-		fmt.Println("\\___/                 2.     register                           \\___/")
+		fmt.Println("\\___/                 2.     Register                           \\___/")
 		fmt.Println("/   \\                                                           /   \\")
-		fmt.Println("\\___/                 q.      exit                              \\___/")
+		fmt.Println("\\___/                 q.      Exit                              \\___/")
 		printMenuBottomPart()
 		_, _ = fmt.Scanf("%c\n", &choice)
 		switch choice {
@@ -140,14 +141,13 @@ func homePage(){
 			exit = 1
 			break
 		default:
-			fmt.Println("Incorrect input, try again")
+			fmt.Println("Incorrect input, try again...")
 		}
 		if exit == 1 {
-			fmt.Println("Bye Bye")
+			fmt.Println("Bye Bye! Come back soon!")
 			time.Sleep(2 * time.Second)
 			break
 		}
 		time.Sleep(3 * time.Second)
 	}
 }
-
