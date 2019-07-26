@@ -15,24 +15,24 @@ var (
 )
 
 type assetAccount struct {
-	AccountId  string
+	accountID  string
 	AccountPwd [32]byte
 	Player     assetPlayer
 }
 
 func signIn() bool {
-	accountId := ""
+	accountID := ""
 	clearPassword := ""
 
 	fmt.Print("Account Id: ")
-	_, _ = fmt.Scanf("%s\n", &accountId)
+	_, _ = fmt.Scanf("%s\n", &accountID)
 
 	fmt.Print("Password: \033[38;5;232m")
 	_, _ = fmt.Scanf("%s\n", &clearPassword)
 	fmt.Print("\033[39;49m")
 	password := sha256.Sum256([]byte(clearPassword))
 
-	if idxUser := login(accountId, password); idxUser != -1 {
+	if idxUser := login(accountID, password); idxUser != -1 {
 		loggedAccount = idxUser
 		return true
 	}
@@ -45,8 +45,8 @@ func register() {
 
 	for {
 		fmt.Print("Account Id: ")
-		_, _ = fmt.Scanf("%s\n", &newAccount.AccountId)
-		if accountExist(newAccount.AccountId) && newAccount.AccountId != "" {
+		_, _ = fmt.Scanf("%s\n", &newAccount.accountID)
+		if accountExist(newAccount.accountID) && newAccount.accountID != "" {
 			println("Id already taken. Please retry")
 		} else {
 			break
@@ -64,9 +64,9 @@ func register() {
 	saveAccounts()
 }
 
-func accountExist(accountId string) bool {
+func accountExist(accountID string) bool {
 	for _, account := range accountsList {
-		if account.AccountId == accountId {
+		if account.accountID == accountID {
 			return true
 		}
 	}
@@ -75,7 +75,7 @@ func accountExist(accountId string) bool {
 
 func login(account string, password [32]byte) int {
 	for idx, listedAccount := range accountsList {
-		if listedAccount.AccountId == account && listedAccount.AccountPwd == password {
+		if listedAccount.accountID == account && listedAccount.AccountPwd == password {
 			return idx
 		}
 	}
