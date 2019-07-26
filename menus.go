@@ -48,7 +48,7 @@ func mainMenu() {
 		time.Sleep(3 * time.Second)
 	}
 }
-func pvpMenu() {
+func pvpMenu(){
 	for {
 		choice := '0'
 		exit := 0
@@ -60,7 +60,9 @@ func pvpMenu() {
 		fmt.Println("/   \\                                                           /   \\")
 		fmt.Println("\\___/                 2.      2 vs 2                            \\___/")
 		fmt.Println("/   \\                                                           /   \\")
-		fmt.Println("\\___/                 3.      go back                           \\___/")
+		fmt.Println("\\___/                 3.   custom match                         \\___/")
+		fmt.Println("/   \\                                                           /   \\")
+		fmt.Println("\\___/                 4.      go back                           \\___/")
 		printMenuBottomPart()
 		_, _ = fmt.Scanf("%c\n", &choice)
 		switch choice {
@@ -71,6 +73,9 @@ func pvpMenu() {
 			start2vs2()
 			break
 		case '3':
+			customPvp()
+			break
+		case '4':
 			exit = 1
 			break
 		default:
