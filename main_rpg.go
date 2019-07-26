@@ -1,53 +1,52 @@
 package main
 
+/*
+	Files contents:
+		structs.go		-->		contains all the game's structs and classes
+		menus.go		-->		contains all the menus and display functions
+		mechanics.go	-->		contains all the game mechanics functions
+		demo.go			-->		contains the demo function to try out all the game mechanics
+		README.md		-->		a nice and cool README file to understand the project
+*/
+
+// Importing necessary dependencies
 import (
-	"fmt"
+	"math/rand"
+	"time"
 )
 
-type assetFighter struct {
-	name  string
-	class assetClass
+// Setting up the needed variables
+var (
+	classesMap  = make(map[string]assetClass)
+	attacksMap  = make(map[string]eventAttack)
+	combosMap   = make(map[string]eventCombo)
+	pvpBlueTeam = make(map[uint]*assetPlayer)
+	pvpRedTeam  = make(map[uint]*assetPlayer)
+	randSeed    = rand.NewSource(time.Now().UnixNano())
+	random      = rand.New(randSeed)
+)
+
+// Initializing all the important assets
+func init() {
+	initClasses()
+	initAttacks()
+	initCombos()
+	initPlayers()
 }
 
-type assetClass struct {
-	name     string
-	health   uint
-	strength uint
+// start1vs1 : This function launches 1VS1 Combat
+func start1vs1() {
+	setPvpParams(1, 1)
+	startPvpFight(1, 1)
 }
 
-type eventAttack struct {
-	name   string
-	class  assetClass
-	damage uint
+// start2vs2 : This function launches 2VS2 Combat
+func start2vs2() {
+	setPvpParams(2, 2)
+	startPvpFight(2, 2)
 }
 
-type eventCombo struct {
-	name        string
-	class       assetClass
-	attackOne   eventAttack
-	attackTwo   eventAttack
-	damageBonus uint
-}
-
-func hit(target *assetFighter, strength uint) {
-	target.class.health -= strength
-}
-
-func getHit() {
-
-}
-
+// Launching Main Homepage
 func main() {
-	paladin := assetClass{"Paladin", 100, 20}
-	ninja := assetClass{"Ninja", 80, 35}
-
-	fighterJuan := assetFighter{"Juan", paladin}
-
-	fmt.Println(paladin)
-	fmt.Println(ninja)
-	fmt.Println(fighterJuan)
-
-	hit(&fighterJuan, fighterJuan.class.strength)
-
-	fmt.Println(fighterJuan)
+	homePage()
 }
