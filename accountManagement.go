@@ -10,30 +10,29 @@ import (
 )
 
 var (
-	accountsList  []assetAccount
+	accountsList []assetAccount
 	loggedAccount int
 )
 
 type assetAccount struct {
-	accountID  string
-	AccountPwd [32]byte
-	Player     assetPlayer
+	AccountId     string
+	AccountPwd    [32]byte
+	Player        assetPlayer
 }
 
-func signIn() bool {
-	accountID := ""
+func signIn() bool{
+	accountId := ""
 	clearPassword := ""
 
-	fmt.Print("Account ID: ")
-	_, _ = fmt.Scanf("%s\n", &accountID)
+	fmt.Print("Account Id: ")
+	_, _ = fmt.Scanf("%s\n", &accountId)
 
-	//fmt.Print("Password: \033[38;5;232m")
-	fmt.Print("Password: ")
+	fmt.Print("Password: \033[38;5;232m")
 	_, _ = fmt.Scanf("%s\n", &clearPassword)
-	//fmt.Print("\033[39;49m")
+	fmt.Print("\033[39;49m")
 	password := sha256.Sum256([]byte(clearPassword))
 
-	if idxUser := login(accountID, password); idxUser != -1 {
+	if idxUser := login(accountId, password); idxUser != -1 {
 		loggedAccount = idxUser
 		return true
 	}
@@ -41,24 +40,23 @@ func signIn() bool {
 	return false
 }
 
-func register() {
+func register(){
 	newAccount := assetAccount{}
 
 	for {
-		fmt.Print("Account ID: ")
-		_, _ = fmt.Scanf("%s\n", &newAccount.accountID)
-		if accountExist(newAccount.accountID) && newAccount.accountID != "" {
-			println("ID already taken. Please retry...")
+		fmt.Print("Account Id: ")
+		_, _ = fmt.Scanf("%s\n", &newAccount.AccountId)
+		if accountExist(newAccount.AccountId) && newAccount.AccountId != "" {
+			println("Id already taken. Please retry")
 		} else {
 			break
 		}
 	}
 
 	clearPassword := ""
-	//fmt.Print("Password: \033[38;5;232m")
-	fmt.Print("Password: ")
+	fmt.Print("Password: \033[38;5;232m")
 	_, _ = fmt.Scanf("%s\n", &clearPassword)
-	//fmt.Print("\033[39;49m")
+	fmt.Print("\033[39;49m")
 	newAccount.AccountPwd = sha256.Sum256([]byte(clearPassword))
 
 	newAccount.Player = createPlayer()
@@ -66,18 +64,18 @@ func register() {
 	saveAccounts()
 }
 
-func accountExist(accountID string) bool {
+func accountExist(accountId string) bool{
 	for _, account := range accountsList {
-		if account.accountID == accountID {
+		if account.AccountId == accountId {
 			return true
 		}
 	}
 	return false
 }
 
-func login(account string, password [32]byte) int {
+func login(account string, password [32]byte) int{
 	for idx, listedAccount := range accountsList {
-		if listedAccount.accountID == account && listedAccount.AccountPwd == password {
+		if listedAccount.AccountId == account && listedAccount.AccountPwd == password {
 			return idx
 		}
 	}
@@ -85,7 +83,7 @@ func login(account string, password [32]byte) int {
 }
 
 // not pure att all
-func getAccounts() {
+func getAccounts(){
 	content, err := ioutil.ReadFile(".data/accounts.secure")
 	if err != nil {
 		log.Fatal(err)
@@ -97,7 +95,7 @@ func getAccounts() {
 }
 
 // not pure either
-func saveAccounts() {
+func saveAccounts(){
 	jsonAccounts, err := json.Marshal(accountsList)
 	if err != nil {
 		log.Fatal(err)
@@ -112,7 +110,7 @@ func saveAccounts() {
 	}
 }
 
-func homePage() {
+func homePage(){
 	for {
 		choice := '0'
 		exit := 0

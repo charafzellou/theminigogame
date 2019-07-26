@@ -27,6 +27,11 @@ For bug fixes or improvements, please open an issue and we will get back to you 
 - [X] Créer une fonction Combo (correspondant à la Struct Joueur) permettant d'enchainer plusieurs attaques
 en même temps, et donc de faire subir plusieurs attaques à un adversaire.
 - [x] Implémenter une manière permettant à des groupes de joueurs de s'affronter entre-eux (hint: utilisez les collections)
+- [x] Chaque joueur doit pouvoir s'enregister lorsqu'il accède au programme grâce à un pseudonyme et un mot de passe. Mettre en place une fonction "register".
+- [x] Une fois cela fait, demander le nom d'utilisateur et le mot de passe du joueur et lui proposer des joueurs ayant +- 20% de son niveau pour pouvoir jouer avec eux et / ou les affronter
+- [ ] Créer une Struct "Monstre" qui permettra aux joueurs de faire du PVM (Player Vs Machine).
+- [ ] Une fois dans le programme, un monstre peut attaquer un joueur si celui-ci, une fois connecté au jeu, reste inactif pendant plus de 20 secondes.
+- [ ] BONUS: Développer une mécanique permettant à plusieurs joueurs d'affronter plusieurs monstres en même temps.
 
 ## License
 [GNU General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/) 🥐
