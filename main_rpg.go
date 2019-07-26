@@ -11,6 +11,7 @@ package main
 
 // Importing necessary dependencies
 import (
+	"fmt"
 	"math/rand"
 	"time"
 )
@@ -44,6 +45,35 @@ func start1vs1() {
 func start2vs2() {
 	setPvpParams(2, 2)
 	startPvpFight(2, 2)
+}
+
+func customPvp(){
+	redTeam := 0
+	blueTeam := 0
+	fmt.Println("Please select RED TEAM size : ")
+	for {
+		isInt, _ := fmt.Scan(&redTeam)
+		if isInt == 1 {
+			if redTeam <= 0 {
+				fmt.Println("Please enter valid number")
+			} else {
+				break
+			}
+		}
+	}
+	fmt.Println("Please select BLUE TEAM size : ")
+	for {
+		isInt, _ := fmt.Scan(&blueTeam)
+		if isInt == 1 {
+			if blueTeam <= 0 {
+				fmt.Println("Please enter valid number")
+			} else {
+				break
+			}
+		}
+	}
+	setPvpParams(redTeam, blueTeam)
+	startPvpFight(redTeam, blueTeam)
 }
 
 // Launching Main Homepage
