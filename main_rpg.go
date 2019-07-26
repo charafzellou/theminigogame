@@ -226,7 +226,9 @@ func choiceFromList(list map[int]string) (choice int){
 }
 func setPvpParams(redTeamSize int, blueTeamSize int){
 	fmt.Println("RED TEAM :")
-	createTeam(redTeamSize, pvpRedTeam)
+	fmt.Println(accountsList[loggedAccount].Player.Name, "is in RED TEAM")
+	pvpRedTeam[uint(redTeamSize)] = &accountsList[loggedAccount].Player
+	createTeam(redTeamSize -1, pvpRedTeam)
 	fmt.Println("BLUE TEAM :")
 	createTeam(blueTeamSize, pvpBlueTeam)
 }
