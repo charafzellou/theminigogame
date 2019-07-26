@@ -142,9 +142,7 @@ func createPlayer() assetPlayer{
 	fmt.Println("Select your primary attack")
 	attacksList := getAttacks(attacksMap, classesList[class])
 	displayList(attacksList)
-	attack := choiceFromList(attacksList)
-	attackChosen := make(map[int]eventAttack)
-	attackChosen[1] = attacksMap[attacksList[attack]]
+	attacksChosen := chooseAttacks(attacksList)
 
 	fmt.Println("Select your special attack")
 	combosList := getCombo(combosMap, classesList[class])
@@ -155,11 +153,52 @@ func createPlayer() assetPlayer{
 		name,
 		classesMap[classesList[class]],
 		0,
-		attackChosen,
+		attacksChosen,
 		combosMap[combosList[combo]],
 		combosMap[combosList[combo]].ReloadTime,
-		attacksMap[attacksList[attack]],
+		attacksChosen[1],
 	}
+}
+func chooseAttacks(list map[int]string) map[int]eventAttack{
+	choice := [4]int{0, 0, 0, 0}
+	for i := 0; i < 4; i++{
+		fmt.Println("Select your attack #", i + 1 ,"(-1 to quit)")
+		for {
+			isInt, _ := fmt.Scan(&choice[i])
+			if isInt == 1 {
+				if choice[i] == -1 && i != 0 {
+					break
+				} else if list[choice[i]] == "" {
+					fmt.Println("Please enter valid number")
+				} else {
+					taken := false
+					for j := 0; j < 4; j++{
+						if choice[i] == choice[j] && i != j {
+							taken = true
+							break
+						}
+					}
+					if taken {
+						fmt.Println("Attack can only be selected once")
+					} else {
+						break
+					}
+				}
+			}
+		}
+		if choice[i] == -1 {
+			break
+		}
+	}
+	result := make(map[int]eventAttack)
+	for idx, attack := range choice{
+		if attack != -1 {
+			result[idx + 1] = attacksMap[list[attack]]
+		} else {
+			break
+		}
+	}
+	return result
 }
 func displayList(list map[int]string){
 	for idx, elemName := range list {
