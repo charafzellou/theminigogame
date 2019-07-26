@@ -422,7 +422,9 @@ func pvpMenu(){
 		fmt.Println("/   \\                                                           /   \\")
 		fmt.Println("\\___/                 2.      2 vs 2                            \\___/")
 		fmt.Println("/   \\                                                           /   \\")
-		fmt.Println("\\___/                 3.      go back                           \\___/")
+		fmt.Println("\\___/                 3.   custom match                         \\___/")
+		fmt.Println("/   \\                                                           /   \\")
+		fmt.Println("\\___/                 4.      go back                           \\___/")
 		printMenuBottomPart()
 		_, _ = fmt.Scanf("%c\n", &choice)
 		switch choice {
@@ -433,6 +435,9 @@ func pvpMenu(){
 			Start2vs2()
 			break
 		case '3':
+			customPvp()
+			break
+		case '4':
 			exit = 1
 			break
 		default:
@@ -493,6 +498,34 @@ func Start1vs1(){
 func Start2vs2(){
 	setPvpParams(2, 2)
 	startPvpFight(2,2)
+}
+func customPvp(){
+	redTeam := 0
+	blueTeam := 0
+	fmt.Println("Please select RED TEAM size : ")
+	for {
+		isInt, _ := fmt.Scan(&redTeam)
+		if isInt == 1 {
+			if redTeam <= 0 {
+				fmt.Println("Please enter valid number")
+			} else {
+				break
+			}
+		}
+	}
+	fmt.Println("Please select BLUE TEAM size : ")
+	for {
+		isInt, _ := fmt.Scan(&blueTeam)
+		if isInt == 1 {
+			if blueTeam <= 0 {
+				fmt.Println("Please enter valid number")
+			} else {
+				break
+			}
+		}
+	}
+	setPvpParams(redTeam, blueTeam)
+	startPvpFight(redTeam, blueTeam)
 }
 func displayWinnerScreen(winner int){
 	printMenuUpperPart()
