@@ -27,7 +27,7 @@ func hit(attacker assetPlayer, attack eventAttack, target *assetPlayer) {
 }
 func getHit(target *assetPlayer, amount int) {
 	target.Class.Health -= amount
-	fmt.Println(target.Name, "suffered", amount, "Damage !")
+	fmt.Println(target.Name, "suffered", amount, "damage !")
 }
 func getHealed(target *assetPlayer, amount int) {
 	target.Class.Health += amount
@@ -35,7 +35,7 @@ func getHealed(target *assetPlayer, amount int) {
 }
 func comboHit(attacker assetPlayer, combo eventCombo, target *assetPlayer) {
 	hit(attacker, combo.AttackOne, target)
-	fmt.Println("OMG ! it's", combo.Name, "combo attack !")
+	fmt.Println("OMG !", attacker.Name, "called in", combo.Name, "!")
 	hit(attacker, combo.AttackTwo, target)
 	fmt.Println("Bonus power :")
 	if combo.AttackOne.Effect+combo.AttackTwo.Effect == 0 {

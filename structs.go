@@ -18,7 +18,8 @@ type assetClass struct {
 }
 type assetMonster struct {
 	Name   string
-	Attack eventAttack
+	Health int
+	Damage int
 }
 
 /*
@@ -54,18 +55,33 @@ func initClasses() {
 	classesMap["Berserk"] = assetClass{"Berserk", 290, 5, 25}
 }
 func initAttacks() {
-	attacksMap["Paladin slash"] = eventAttack{"Paladin slash", "Paladin", 1, 4}
-	attacksMap["Basic arrow"] = eventAttack{"Basic arrow", "Archer", 1, 4}
-	attacksMap["Shuriken throw"] = eventAttack{"Shuriken throw", "Ninja", 1, 4}
-	attacksMap["Prier"] = eventAttack{"Prier", "Cleric", 0, 4}
-	attacksMap["Berserk cut"] = eventAttack{"Berserk cut", "Berserk", 1, 4}
+	// Paladin Class
+	attacksMap["Paladin Slash"] = eventAttack{"Paladin Slash", "Paladin", 1, 4}
+	attacksMap["Long Sword Swing"] = eventAttack{"Long Sword Swing", "Paladin", 1, 3}
+	attacksMap["Shield Block"] = eventAttack{"Shield Block", "Paladin", 1, 2}
+	// Archer Class
+	attacksMap["Basic Arrow"] = eventAttack{"Basic Arrow", "Archer", 1, 4}
+	attacksMap["Bow Charge"] = eventAttack{"Bow Charge", "Archer", 1, 3}
+	attacksMap["Quick Punch"] = eventAttack{"Quick Punch", "Archer", 1, 2}
+	// Ninja Class
+	attacksMap["Shuriken Throw"] = eventAttack{"Shuriken Throw", "Ninja", 1, 4}
+	attacksMap["Hidden Dagger"] = eventAttack{"Hidden Dagger", "Ninja", 1, 4}
+	attacksMap["Lightning Dash"] = eventAttack{"Lightning Dash", "Ninja", 1, 2}
+	// Cleric Class
+	attacksMap["Prayer to Gods"] = eventAttack{"Prayer to Gods", "Cleric", 0, 4}
+	attacksMap["Sunday Preach"] = eventAttack{"Sunday Preach", "Cleric", 0, 3}
+	attacksMap["Random Gibber"] = eventAttack{"Random Gibber", "Cleric", 1, 1}
+	// Berserk Class
+	attacksMap["Berserk Cut"] = eventAttack{"Berserk Cut", "Berserk", 1, 4}
+	attacksMap["Call to Arms"] = eventAttack{"Call to Arms", "Berserk", 0, 3}
+	attacksMap["Kratos Rage"] = eventAttack{"Kratos Rage", "Berserk", 1, 24}
 }
 func initCombos() {
-	combosMap["PaladinCombo"] = eventCombo{"DoubleSlash", "Paladin", attacksMap["Paladin slash"], attacksMap["Paladin slash"], 0, 3}
-	combosMap["ArcherCombo"] = eventCombo{"DoubleArrow", "Archer", attacksMap["Basic arrow"], attacksMap["Basic arrow"], 0, 3}
-	combosMap["NinjaCombo"] = eventCombo{"DoubleShuriken", "Ninja", attacksMap["Shuriken throw"], attacksMap["Shuriken throw"], 0, 3}
-	combosMap["ClericCombo"] = eventCombo{"DoublePrier", "Cleric", attacksMap["Prier"], attacksMap["Prier"], 10, 3}
-	combosMap["BerserkCombo"] = eventCombo{"DoubleCut", "Berserk", attacksMap["Berserk cut"], attacksMap["Berserk cut"], 0, 3}
+	combosMap["LionHeart's Duty"] = eventCombo{"LionHeart's Duty", "Paladin", attacksMap["Shield Block"], attacksMap["Paladin Slash"], 5, 4}
+	combosMap["Hawkeye's Touch"] = eventCombo{"Hawkeye's Touch", "Archer", attacksMap["Basic Arrow"], attacksMap["Basic Arrow"], 5, 4}
+	combosMap["Shogunat's Honour"] = eventCombo{"Shogunat's Honour", "Ninja", attacksMap["Lightning Dash"], attacksMap["Hidden Dagger"], 5, 4}
+	combosMap["Athena's Blessing"] = eventCombo{"Athena's Blessing", "Cleric", attacksMap["Prayer to Gods"], attacksMap["Random Gibber"], 15, 3}
+	combosMap["Thor's Wrath"] = eventCombo{"Thor's Wrath", "Berserk", attacksMap["Berserk cut"], attacksMap["Call to Arms"], 0, 5}
 }
 func initPlayers() {
 	getAccounts()

@@ -123,3 +123,6 @@ func showTextLn(text string, dur int) {
 	fmt.Println(text)
 	time.Sleep(time.Duration(dur) * (time.Second))
 }
+func showSeparator() {
+	fmt.Println("_______________________________________________________________________________")
+}

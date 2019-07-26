@@ -24,12 +24,13 @@ func signIn() bool {
 	accountID := ""
 	clearPassword := ""
 
-	fmt.Print("Account Id: ")
+	fmt.Print("Account ID: ")
 	_, _ = fmt.Scanf("%s\n", &accountID)
 
-	fmt.Print("Password: \033[38;5;232m")
+	//fmt.Print("Password: \033[38;5;232m")
+	fmt.Print("Password: ")
 	_, _ = fmt.Scanf("%s\n", &clearPassword)
-	fmt.Print("\033[39;49m")
+	//fmt.Print("\033[39;49m")
 	password := sha256.Sum256([]byte(clearPassword))
 
 	if idxUser := login(accountID, password); idxUser != -1 {
@@ -44,19 +45,20 @@ func register() {
 	newAccount := assetAccount{}
 
 	for {
-		fmt.Print("Account Id: ")
+		fmt.Print("Account ID: ")
 		_, _ = fmt.Scanf("%s\n", &newAccount.accountID)
 		if accountExist(newAccount.accountID) && newAccount.accountID != "" {
-			println("Id already taken. Please retry")
+			println("ID already taken. Please retry...")
 		} else {
 			break
 		}
 	}
 
 	clearPassword := ""
-	fmt.Print("Password: \033[38;5;232m")
+	//fmt.Print("Password: \033[38;5;232m")
+	fmt.Print("Password: ")
 	_, _ = fmt.Scanf("%s\n", &clearPassword)
-	fmt.Print("\033[39;49m")
+	//fmt.Print("\033[39;49m")
 	newAccount.AccountPwd = sha256.Sum256([]byte(clearPassword))
 
 	newAccount.Player = createPlayer()
@@ -118,11 +120,11 @@ func homePage() {
 		fmt.Println("/   \\                    The Mini Go Game                       /   \\")
 		fmt.Println("\\___/                                                           \\___/")
 		fmt.Println("/   \\                                                           /   \\")
-		fmt.Println("\\___/                 1.     sign in                            \\___/")
+		fmt.Println("\\___/                 1.     Sign in                            \\___/")
 		fmt.Println("/   \\                                                           /   \\")
-		fmt.Println("\\___/                 2.     register                           \\___/")
+		fmt.Println("\\___/                 2.     Register                           \\___/")
 		fmt.Println("/   \\                                                           /   \\")
-		fmt.Println("\\___/                 q.      exit                              \\___/")
+		fmt.Println("\\___/                 q.      Exit                              \\___/")
 		printMenuBottomPart()
 		_, _ = fmt.Scanf("%c\n", &choice)
 		switch choice {
@@ -141,10 +143,10 @@ func homePage() {
 			exit = 1
 			break
 		default:
-			fmt.Println("Incorrect input, try again")
+			fmt.Println("Incorrect input, try again...")
 		}
 		if exit == 1 {
-			fmt.Println("Bye Bye")
+			fmt.Println("Bye Bye! Come back soon!")
 			time.Sleep(2 * time.Second)
 			break
 		}
