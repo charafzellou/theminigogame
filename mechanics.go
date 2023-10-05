@@ -46,7 +46,7 @@ func comboHit(attacker assetPlayer, combo eventCombo, target *assetPlayer) {
 }
 
 // Asset functions
-func createPlayer() assetPlayer{
+func createPlayer() assetPlayer {
 	name := ""
 	fmt.Print("Character Name: ")
 	_, _ = fmt.Scanf("%s\n", &name)
@@ -76,10 +76,10 @@ func createPlayer() assetPlayer{
 		attacksChosen[1],
 	}
 }
-func chooseAttacks(list map[int]string) map[int]eventAttack{
+func chooseAttacks(list map[int]string) map[int]eventAttack {
 	choice := [3]int{0, 0, 0}
-	for i := 0; i < 3; i++{
-		fmt.Println("Select your attack #", i + 1 ,"(-1 to quit)")
+	for i := 0; i < 3; i++ {
+		fmt.Println("Select your attack #", i+1, "(-1 to quit)")
 		for {
 			isInt, _ := fmt.Scan(&choice[i])
 			if isInt == 1 {
@@ -89,7 +89,7 @@ func chooseAttacks(list map[int]string) map[int]eventAttack{
 					fmt.Println("Please enter valid number")
 				} else {
 					taken := false
-					for j := 0; j < 3; j++{
+					for j := 0; j < 3; j++ {
 						if choice[i] == choice[j] && i != j {
 							taken = true
 							break
@@ -108,9 +108,9 @@ func chooseAttacks(list map[int]string) map[int]eventAttack{
 		}
 	}
 	result := make(map[int]eventAttack)
-	for idx, attack := range choice{
+	for idx, attack := range choice {
 		if attack != -1 {
-			result[idx + 1] = attacksMap[list[attack]]
+			result[idx+1] = attacksMap[list[attack]]
 		} else {
 			break
 		}
@@ -181,11 +181,11 @@ func displayList(list map[int]string) {
 		fmt.Println(idx, "", elemName)
 	}
 }
-func setPvpParams(redTeamSize int, blueTeamSize int){
+func setPvpParams(redTeamSize int, blueTeamSize int) {
 	fmt.Println("RED TEAM :")
 	fmt.Println(accountsList[loggedAccount].Player.Name, "is in RED TEAM")
 	pvpRedTeam[uint(redTeamSize)] = &accountsList[loggedAccount].Player
-	createTeam(redTeamSize -1, pvpRedTeam)
+	createTeam(redTeamSize-1, pvpRedTeam)
 	fmt.Println("BLUE TEAM :")
 	createTeam(blueTeamSize, pvpBlueTeam)
 }

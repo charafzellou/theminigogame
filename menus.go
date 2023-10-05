@@ -48,7 +48,7 @@ func mainMenu() {
 		time.Sleep(3 * time.Second)
 	}
 }
-func pvpMenu(){
+func pvpMenu() {
 	for {
 		choice := '0'
 		exit := 0
