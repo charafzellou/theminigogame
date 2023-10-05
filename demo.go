@@ -20,28 +20,28 @@ func runDemo() {
 	listNinja := make(map[int]eventAttack)
 	listNinja[0] = attackNinja
 
-	combo1 := eventCombo{"LionHeart's Duty", "Paladin", attackPaladin, attackPaladin, 5, 3}
+	combo1 := eventCombo{"Lionheart's Duty", "Paladin", attackPaladin, attackPaladin, 5, 3}
 	combo2 := eventCombo{"Hawkeye's Touch", "Archer", attackArcher, attackArcher, 5, 3}
-	combo3 := eventCombo{"Shogunat's Honour", "Ninja", attackNinja, attackNinja, 5, 3}
+	combo3 := eventCombo{"Shogunat's Honor", "Ninja", attackNinja, attackNinja, 5, 3}
 
 	paladinJuan := assetPlayer{"Juanitus", paladin, 0, listPaladin, combo1, 3, attackPaladin}
 	archerJuan := assetPlayer{"Juanito", archer, 0, listArcher, combo2, 3, attackArcher}
 	ninjaJuan := assetPlayer{"Juan", ninja, 0, listNinja, combo3, 3, attackNinja}
 
 	fmt.Println("Starting PvP demo : ")
-	time.Sleep(3 * time.Second)
+	time.Sleep(2 * time.Second)
 	hit(paladinJuan, listPaladin[0], &archerJuan)
-	time.Sleep(3 * time.Second)
+	time.Sleep(2 * time.Second)
 	hit(archerJuan, listArcher[0], &paladinJuan)
-	time.Sleep(3 * time.Second)
+	time.Sleep(2 * time.Second)
 	comboHit(paladinJuan, paladinJuan.SpecialAttack, &archerJuan)
-	time.Sleep(3 * time.Second)
+	time.Sleep(2 * time.Second)
 	comboHit(archerJuan, archerJuan.SpecialAttack, &paladinJuan)
-	time.Sleep(3 * time.Second)
+	time.Sleep(2 * time.Second)
 	hit(ninjaJuan, listNinja[0], &archerJuan)
-	time.Sleep(3 * time.Second)
+	time.Sleep(2 * time.Second)
 	hit(ninjaJuan, listNinja[0], &paladinJuan)
-	time.Sleep(3 * time.Second)
+	time.Sleep(2 * time.Second)
 	comboHit(ninjaJuan, ninjaJuan.SpecialAttack, &archerJuan)
 	time.Sleep(8 * time.Second)
 

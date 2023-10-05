@@ -11,16 +11,16 @@ func mainMenu() {
 		choice := '0'
 		exit := 0
 		printMenuUpperPart()
-		fmt.Println("/   \\                    The Mini Go Game                       /   \\")
+		fmt.Println("/   \\                   The Mini Go Game                        /   \\")
 		fmt.Println("\\___/                                                           \\___/")
 		fmt.Println("/   \\                                                           /   \\")
 		fmt.Println("\\___/                 1.    Story Mode                          \\___/")
 		fmt.Println("/   \\                                                           /   \\")
 		fmt.Println("\\___/                 2.       PvP                              \\___/")
 		fmt.Println("/   \\                                                           /   \\")
-		fmt.Println("\\___/                 3.     run demo                           \\___/")
+		fmt.Println("\\___/                 3.  Run Demo Fight                        \\___/")
 		fmt.Println("/   \\                                                           /   \\")
-		fmt.Println("\\___/                 q.      log out                           \\___/")
+		fmt.Println("\\___/                 q.      Logout                            \\___/")
 		printMenuBottomPart()
 		_, _ = fmt.Scanf("%c\n", &choice)
 		switch choice {
@@ -48,7 +48,7 @@ func mainMenu() {
 		time.Sleep(3 * time.Second)
 	}
 }
-func pvpMenu(){
+func pvpMenu() {
 	for {
 		choice := '0'
 		exit := 0
@@ -60,9 +60,9 @@ func pvpMenu(){
 		fmt.Println("/   \\                                                           /   \\")
 		fmt.Println("\\___/                 2.      2 vs 2                            \\___/")
 		fmt.Println("/   \\                                                           /   \\")
-		fmt.Println("\\___/                 3.   custom match                         \\___/")
+		fmt.Println("\\___/                 3.   Custom Match                         \\___/")
 		fmt.Println("/   \\                                                           /   \\")
-		fmt.Println("\\___/                 4.      go back                           \\___/")
+		fmt.Println("\\___/                 4.      Go Back                           \\___/")
 		printMenuBottomPart()
 		_, _ = fmt.Scanf("%c\n", &choice)
 		switch choice {

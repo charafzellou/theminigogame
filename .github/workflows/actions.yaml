@@ -1,0 +1,22 @@
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+name: TheMiniGoGame CI Workflow
+jobs:
+  test:
+    name: Go - Build
+    strategy:
+      matrix:
+        go-version: [1.21.1]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/setup-go@v3
+      with:
+        go-version: ${{ matrix.go-version }}
+    - uses: actions/checkout@v3
+    - run: go install
+    - run: go build .

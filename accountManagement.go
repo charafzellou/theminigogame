@@ -24,7 +24,7 @@ func signIn() bool{
 	accountId := ""
 	clearPassword := ""
 
-	fmt.Print("Account Id: ")
+	fmt.Print("Account ID: ")
 	_, _ = fmt.Scanf("%s\n", &accountId)
 
 	fmt.Print("Password: \033[38;5;232m")
@@ -44,10 +44,10 @@ func register(){
 	newAccount := assetAccount{}
 
 	for {
-		fmt.Print("Account Id: ")
+		fmt.Print("Account ID: ")
 		_, _ = fmt.Scanf("%s\n", &newAccount.AccountId)
 		if accountExist(newAccount.AccountId) && newAccount.AccountId != "" {
-			println("Id already taken. Please retry")
+			println("ID is already taken. Please choose another one.")
 		} else {
 			break
 		}
@@ -128,10 +128,10 @@ func homePage(){
 		switch choice {
 		case '1':
 			if signIn() {
-				fmt.Println("Logged as almighty", accountsList[loggedAccount].Player.Name, "the", accountsList[loggedAccount].Player.Class.Name)
+				fmt.Println("Logged as almighty ", accountsList[loggedAccount].Player.Name, " the ", accountsList[loggedAccount].Player.Class.Name)
 				mainMenu()
 			} else {
-				fmt.Println("We can't find that Account or password is incorrect.")
+				fmt.Println("We can not find that Account, or the Password is incorrect.")
 			}
 			break
 		case '2':
