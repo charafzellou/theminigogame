@@ -77,8 +77,8 @@ func createPlayer() assetPlayer{
 	}
 }
 func chooseAttacks(list map[int]string) map[int]eventAttack{
-	choice := [4]int{0, 0, 0, 0}
-	for i := 0; i < 4; i++{
+	choice := [3]int{0, 0, 0, 0}
+	for i := 0; i < 3; i++{
 		fmt.Println("Select your attack #", i + 1 ,"(-1 to quit)")
 		for {
 			isInt, _ := fmt.Scan(&choice[i])
@@ -89,7 +89,7 @@ func chooseAttacks(list map[int]string) map[int]eventAttack{
 					fmt.Println("Please enter valid number")
 				} else {
 					taken := false
-					for j := 0; j < 4; j++{
+					for j := 0; j < 3; j++{
 						if choice[i] == choice[j] && i != j {
 							taken = true
 							break

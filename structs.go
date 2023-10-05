@@ -74,12 +74,12 @@ func initAttacks() {
 	// Berserk Class
 	attacksMap["Berserk Cut"] = eventAttack{"Berserk Cut", "Berserk", 1, 4}
 	attacksMap["Call to Arms"] = eventAttack{"Call to Arms", "Berserk", 0, 3}
-	attacksMap["Kratos Rage"] = eventAttack{"Kratos Rage", "Berserk", 1, 24}
+	attacksMap["Spartian Rage"] = eventAttack{"Spartian Rage", "Berserk", 1, 24}
 }
 func initCombos() {
-	combosMap["LionHeart's Duty"] = eventCombo{"LionHeart's Duty", "Paladin", attacksMap["Shield Block"], attacksMap["Paladin Slash"], 5, 4}
+	combosMap["Lionheart's Duty"] = eventCombo{"Lionheart's Duty", "Paladin", attacksMap["Shield Block"], attacksMap["Paladin Slash"], 5, 4}
 	combosMap["Hawkeye's Touch"] = eventCombo{"Hawkeye's Touch", "Archer", attacksMap["Basic Arrow"], attacksMap["Basic Arrow"], 5, 4}
-	combosMap["Shogunat's Honour"] = eventCombo{"Shogunat's Honour", "Ninja", attacksMap["Lightning Dash"], attacksMap["Hidden Dagger"], 5, 4}
+	combosMap["Shogunat's Honor"] = eventCombo{"Shogunat's Honor", "Ninja", attacksMap["Lightning Dash"], attacksMap["Hidden Dagger"], 5, 4}
 	combosMap["Athena's Blessing"] = eventCombo{"Athena's Blessing", "Cleric", attacksMap["Prayer to Gods"], attacksMap["Random Gibber"], 15, 3}
 	combosMap["Thor's Wrath"] = eventCombo{"Thor's Wrath", "Berserk", attacksMap["Berserk cut"], attacksMap["Call to Arms"], 0, 5}
 }
