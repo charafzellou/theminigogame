@@ -1,5 +1,7 @@
 ### Go ###
 # Binaries for programs and plugins
+theminigogame
+theminigogame.*
 *.exe
 *.exe~
 *.dll

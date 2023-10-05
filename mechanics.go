@@ -77,7 +77,7 @@ func createPlayer() assetPlayer{
 	}
 }
 func chooseAttacks(list map[int]string) map[int]eventAttack{
-	choice := [3]int{0, 0, 0, 0}
+	choice := [3]int{0, 0, 0}
 	for i := 0; i < 3; i++{
 		fmt.Println("Select your attack #", i + 1 ,"(-1 to quit)")
 		for {
