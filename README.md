@@ -33,4 +33,6 @@ Pull requests are always welcome 🤓, though we have no desire to turn this sch
 For bug fixes or improvements, please open an issue and we will get back to you as soon as we can! 🔜
 
 ## License
+Please cite the author [Charaf ZELLOU](https://linkedin.com/in/charafzellou/) and the source [theminigogame repository](https://github.com/charafzellou/theminigogame/) in any copies, forks or use of the material in this repository.
+
 [GNU Affero General Public License v3.0](https://choosealicense.com/licenses/agpl-3.0/) 🥐
